@@ -1062,7 +1062,7 @@ function DrawOrderBox(inpos, leftclick, rightclick, x, y, value)
 					for i, v in pairs(datawork) do
 						if v == k then
 							if i < Length(datawork) then 
-								datawork = SwapElements(datawork, i, i + 1)
+								datawork = swapElements(datawork, i, i + 1)
 							break end
 						end
 					end
@@ -1074,7 +1074,7 @@ function DrawOrderBox(inpos, leftclick, rightclick, x, y, value)
 					for index, value in pairs(datawork) do
 						if value == k then
 							if (index - 1) > 0 then
-								datawork = SwapElements(datawork, index - 1, index)
+								datawork = swapElements(datawork, index - 1, index)
 							else
 								table.remove(datawork, 1)
 							end
@@ -1114,14 +1114,6 @@ function DrawOrderBox(inpos, leftclick, rightclick, x, y, value)
 		count = count + 1
 	end
 	GUI.Set(key, datawork)
-end
-
-function SwapElements(t, kf, kt)
-	local tv = t[kf]
-	t[kf] = t[kt]
-	t[kt] = tv
-	
-	return t
 end
 
 function DrawTextBox(inpos, click, x, y, size_x, size_y, value)
@@ -1647,6 +1639,13 @@ function hasIValue (tab, val)
     end
 
     return false
+end
+
+function swapElements(t, kf, kt)
+	local tv = t[kf]
+	t[kf] = t[kt]
+	t[kt] = tv
+	return t
 end
 
 function hasValue (tab, val)
