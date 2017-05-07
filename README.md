@@ -12,7 +12,7 @@
 
 1. Download GUI.lua
 2. Put it in hake/scripts/ folder
-3. Download [images](./images/) folder and put in in /hake/images/ folder
+3. Download [images](./images.zip) and extract it in /hake/ folder
 4. Run Hake.me
 5. Enable GUI in "GUI" menu
 6. Press "~" key, enjoy!
