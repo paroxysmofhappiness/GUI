@@ -5,8 +5,8 @@ GUI.Locale =  Menu.AddOption({ "GUI"}, "Localization", "Select your primary lang
 Menu.SetValueName(GUI.Locale, 1, "English")
 Menu.SetValueName(GUI.Locale, 2, "Russian")
 Menu.SetValueName(GUI.Locale, 3, "Chinese")
-GUI.SelectedTheme =  Menu.AddOption({ "GUI"}, "Theme", "Select GUI theme", 1, 1 )
-Menu.SetValueName(GUI.SelectedTheme, 1, "Default")
+-- GUI.SelectedTheme =  Menu.AddOption({ "GUI"}, "Theme", "Select GUI theme", 1, 1 )
+-- Menu.SetValueName(GUI.SelectedTheme, 1, "Default")
 GUI.Languages = {
 	[1] = "english",
 	[2] = "russian",
@@ -375,6 +375,7 @@ function GUI.AddMenuItem(menucode, itemcode, name, control, ...)
 				GUI.Set(itemcode, select(3, ...))			
 			end
 		end
+
 		if temp_data ~= nil and temp_data ~= "" then GUI.Set(itemcode, temp_data) end
 		
 	elseif GUI.MenuType.Key == control then
@@ -544,7 +545,7 @@ function GUI.DrawGUI()
 	local starty = math.floor(h / 2) - 307
 	local leftclick = false
 	local rightclick = false
-	
+
 	if GUI.Actions.MoveHeader then
 		local mx, my = Input.GetCursorPos()
 		
@@ -560,11 +561,10 @@ function GUI.DrawGUI()
 	end
 	
 	Renderer.SetDrawColor(hex2rgb("#fff"))
-	
 	Renderer.DrawImage(GUI.Theme.Background, startx, starty, work_h, work_y)
 	if Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then leftclick = true end
 	if Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_RIGHT) then rightclick = true end
-	
+
 	if leftclick then 
 		if GUI.Actions.MoveHeader then
 			GUI.Actions.MoveHeader = false
@@ -617,7 +617,7 @@ function GUI.DrawGUI()
 			table.insert(temp_table, k)
 		end
 		
-		if GUI.SelectedCategory == 1 and v["category"] == 1 and GUI.SelectedHero == "" then
+		if GUI.SelectedCategory == 1 and v["category"] == 1 and GUI.SelectedHero == "" and not hasValue(temp_table, v["hero"]) then
 			table.insert(temp_table, v["hero"] )
 		end
 		
@@ -646,6 +646,7 @@ function GUI.DrawGUI()
 			if GUI.SelectedCategory == 1 and GUI.SelectedHero == "" then
 				MenuName = k
 			else
+				if GUI.Items[k] == nil then return end
 				MenuName = GUI.Items[k]["perfect_name"]
 			end
 		
@@ -965,6 +966,10 @@ function DrawImageBox(inpos, click, x, y, value)
 		local inpos = Input.IsCursorInRect(tempx, y + 40, value["size_x"], value["size_y"])
 		
 		if inpos then
+			Renderer.SetDrawColor(255, 0, 0, 255)
+			Renderer.DrawOutlineRect(tempx, y + 40, value["size_x"], value["size_y"])
+			Renderer.SetDrawColor(255, 255, 255, 60)
+
 			if click then
 				if not hasValue(datawork,k) then
 					if Length(datawork) >= value["count"] then
@@ -979,7 +984,6 @@ function DrawImageBox(inpos, click, x, y, value)
 					value["callback"](datawork)
 				end
 			end
-			if Length(datawork) < value["count"] then Renderer.SetDrawColor(255, 255, 255, 255) end
 		end
 		
 		if hasValue(datawork, k) then Renderer.SetDrawColor(255, 255, 255, 255) end
@@ -1162,22 +1166,35 @@ function DrawSlider(leftclick, x, y, value)
 	local key = value["code"]
 	local full = value["max"] - value["min"]
 	local pos = tonumber(GUI.Get(key)) - value["min"]
-	local percent = math.floor((pos / full) * 100) + 1
+	local percent = math.ceil((pos / full) * 100)
+	local t =  2.45
 	Renderer.DrawText(GUI.Font.Content, x + 10, y + 10, value["name"], false)
-	Renderer.DrawImage(GUI.Theme.SliderBase, x, y + 50, 245, 4)
-	Renderer.DrawImage(GUI.Theme.SliderFill, x, y + 50, math.floor(percent * 2.45), 4)
-	local inpos = Input.IsCursorInRect(x, y + 42, 255, 20)
+	Renderer.DrawImage(GUI.Theme.SliderBase, x, y + 50, 255, 4)
+	local fil = math.floor(percent * t)
+	Renderer.DrawImage(GUI.Theme.SliderFill, x, y + 50, 5 + fil, 4)
+	
+	-- local inpos = Input.IsCursorInRect(x, y + 42, 255, 20)
+	local inpos = Input.IsCursorInRect(x - 10, y + 32, 275, 40)
 	if not inpos then
-		Renderer.DrawImage(GUI.Theme.Slider, x + math.floor(percent * 2.45), y + 44, 16, 16)
+		Renderer.DrawImage(GUI.Theme.Slider, 5 + x  + (math.ceil(percent * t) - 8), y + 44, 16, 16)
 	else
+		local cx, cy = Input.GetCursorPos()
+
 		if Input.IsKeyDown(Enum.ButtonCode.MOUSE_LEFT) then
-			local cx, cy = Input.GetCursorPos()
-			GUI.Set(key, math.floor((full / 100) * math.ceil((cx - x) / 2.45)) + value["min"])
+			local f = math.ceil((cx - x) / t)
+			if f > 100 then f = 100 end
+			if f < 1 then f = 0 end
+			local val = math.floor((full / 100) * f)
+			GUI.Set(key, val + value["min"])
+			local percent = math.ceil((val / full) * 100)
+
+			Renderer.DrawImage(GUI.Theme.Slider, 5 + x + (math.ceil(percent * t) - 8), y + 44, 16, 16)
+		else
+			Renderer.DrawImage(GUI.Theme.Slider, 5 + x + (math.ceil(percent * t) - 8), y + 44, 16, 16)
 		end
-		Renderer.DrawImage(GUI.Theme.Slider, x + math.floor(percent * 2.45), y + 42, 20, 20)
 	end
 	
-	Renderer.DrawTextCenteredX(GUI.Font.ContentSmallBold, x + (240 / 2), y + 70, GUI.Get(key), false)
+	Renderer.DrawTextCenteredX(GUI.Font.ContentSmallBold, x + (240 / 2), y + 64, GUI.Get(key), false)
 end
 
 function DrawKeyBox(click, x, y, size_x, size_y, value)
@@ -1252,7 +1269,7 @@ end
 
 function ApplyTheme()
 
-	local f = GUI.GetThemeName()
+	local f = 'Default' --GUI.GetThemeName()
 
 	if GUI.Theme.Background == nil then
 		GUI.Theme.Background = Renderer.LoadImage("~/" .. f .. "/background.png")
