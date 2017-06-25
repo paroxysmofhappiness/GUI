@@ -119,6 +119,12 @@ GUI.Category.General = 0
 GUI.Category.Heroes = 1
 GUI.Category.Items = 2
 
+GUI.NotifyType = {}
+GUI.NotifyType.Text = 0
+GUI.NotifyType.ImageText = 1
+GUI.NotifyType.ImageTextImage = 2
+GUI.Notices = {}
+
 GUI.CategoryName = {
 	["english"] = {
 		[0] = "General",
@@ -183,6 +189,8 @@ function GUI.OnDraw()
 	if GUI.IsEnabled("gui:show") then 
 		GUI.DrawGUI()
 	end
+	local w, h = Renderer.GetScreenSize()
+	DrawNotices(w, h)
 	
 	if GUI.DEBUG.Enabled then
 		Renderer.SetDrawColor(hex2rgb("#273142"))
@@ -497,6 +505,22 @@ function GUI.AddMenuItem(menucode, itemcode, name, control, ...)
 	
 end
 
+-- AddNotification("dotka", "carefull", "title", "text", "img", "img", 5)
+
+function GUI.AddNotification(identity, code, title, text, img_1, img_2, time)
+    
+	local Notification = {}
+    Notification.identity = identity
+    Notification.code = code
+    Notification.title = title
+    Notification.text = text
+    Notification.img_1 = img_1
+    Notification.img_2 = img_2
+    Notification.time = os.clock() + time
+	if time == 0 then Notification.time = 0 end
+    table.insert(GUI.Notices, Notification)
+end
+
 function CheckState()
 	if GameRules.GetGameState() ~= GUI.GameState then
 		for k, v in pairs(GUI.Subscriptions) do
@@ -688,6 +712,23 @@ function GUI.DrawGUI()
 		DrawText(startx + workbox_x + 20, starty + workbox_y + 13, GUI.TextValues[GUI.SelectedLanguage]["changelog"])
 	end
 	
+end
+
+function DrawNotices(w, h)
+	local y = 300
+	for k, v in pairs(GUI.Notices) do
+		Renderer.SetDrawColor(255, 255, 255, 20)
+		Renderer.DrawFilledRect(w - 250, y, 230, 50)
+		Renderer.SetDrawColor(hex2rgb('323436'))
+		Renderer.DrawFilledRect(w - 248, y + 2, 226, 46)
+		Renderer.SetDrawColor(hex2rgb('fff'))
+		Renderer.DrawText(GUI.Font.ContentSmallBold, w - 230, y + 8, v.title, false)
+		Renderer.DrawText(GUI.Font.ContentSmallBold, w - 230, y + 30, v.text, false)
+		if os.clock() > v.time then
+            table.remove(GUI.Notices, k)
+        end
+		y = y + 55
+	end
 end
 
 function DrawMenuBox(k, startx, starty, workbox_x, workbox_y, limit_y, leftclick, rightclick)
@@ -1621,7 +1662,7 @@ function tostr( tbl )
   end
   for k, v in pairs( tbl ) do
     if not done[ k ] then
-      insert( result,
+      table.insert( result,
         key_to_str( k ) .. "=" .. val_to_str( v ) )
     end
   end
@@ -1645,7 +1686,7 @@ function removeValue (t, value)
 	local new = {}
 	for k, v in pairs(t) do
 		if v ~= value then
-			new[k] = v
+			table.insert(new, v)
 		end
 	end
 	return new
