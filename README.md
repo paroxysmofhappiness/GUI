@@ -26,6 +26,7 @@ Full documentation you can find here
 - [ADDITIONAL](https://github.com/paroxysmofhappiness/GUI/wiki/ADDITIONAL)
 - [THEMING](https://github.com/paroxysmofhappiness/GUI/wiki/THEMING)
 - [SIMPLE EXAMPLE](https://github.com/paroxysmofhappiness/GUI/wiki/SIMPLE-EXAMPLE)
+- [NOTICES](https://github.com/paroxysmofhappiness/GUI/wiki/NOTICES)
 
 ## Contributing to this project
 
