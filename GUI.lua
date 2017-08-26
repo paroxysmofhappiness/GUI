@@ -110,7 +110,7 @@ GUI.Theme.Menu = nil
 GUI.Settings = {}
 GUI.Settings.PosX = -1
 GUI.Settings.PosY = -1
-
+GUI.Storage = {}
 
 GUI.Data = {}
 GUI.CallBackKey = {}
@@ -1631,7 +1631,6 @@ GUI.HeroesList["npc_dota_hero_witch_doctor"] = "Witch Doctor"
 GUI.HeroesList["npc_dota_hero_skeleton_king"] = "Wraith King"
 GUI.HeroesList["npc_dota_hero_zuus"] = "Zeus"
 
-GUI.Storage = {}
 -----------------------------------------------------------------------------------------------------------
 function GUI.Set(key, value)
 	if type(value) ~= "table" then
