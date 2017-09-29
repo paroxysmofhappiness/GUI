@@ -33,8 +33,8 @@ GUI.Font.Search = Renderer.LoadFont("Arial", 30, Enum.FontWeight.MEDIUM)
 GUI.Font.Footer = Renderer.LoadFont("Arial", 17, Enum.FontWeight.MEDIUM)
 GUI.GameState = -2
 GUI.Config = "GUI"
-GUI.Version = 170916
-GUI.TextVersion = 'v 17.09.16'
+GUI.Version = 170930
+GUI.TextVersion = 'v 17.09.30'
 
 GUI.GameStates = {}
 GUI.GameStates.OnGameMenu = -1
