@@ -801,10 +801,10 @@ function GUI.Draw(leftclick, rightclick)
 			
 			if i >= (c * showonpage) and i < ((c + 1) * showonpage) then 
 				DrawMenuItem(v, startx + 6, nextposition, menusize_x, menusize_y, v["perfect_name"], leftclick, k)
-				i = i + 1
 				nextposition = nextposition + menusize_y
 			end
 		end
+		i = i + 1
 	end
 	
 	local totalpage = math.ceil(temp_val / showonpage)
