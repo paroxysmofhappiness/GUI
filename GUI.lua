@@ -343,7 +343,6 @@ function CheckKeys()
 	if current_key ~= "" then
 		for k, v in pairs(GUI.CallBackKey) do
 			if current_key == GUI.Data[v["itemcode"]] and v["type"] == down_type then
-				Log.Write(os.clock())
 				GUI.Items[v['menucode']]["items"][v["order"]]["callback"]()
 			end
 		end
