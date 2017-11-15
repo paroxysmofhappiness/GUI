@@ -1774,7 +1774,6 @@ GUI.HeroesList["npc_dota_hero_zuus"] = "Zeus"
 -----------------------------------------------------------------------------------------------------------
 function GUI.Set(key, value)
 	if type(value) ~= "table" then
-		-- if value == nil then value = "F" end
 		Config.WriteString("GUI", key, "~" .. value .. "~")
 	else
 		local s = tableToString(value)
