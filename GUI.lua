@@ -6,7 +6,7 @@ GUI.Locale =  Menu.AddOption({ "GUI"}, "Localization", "Select your primary lang
 Menu.SetValueName(GUI.Locale, 1, "English")
 Menu.SetValueName(GUI.Locale, 2, "Russian")
 Menu.SetValueName(GUI.Locale, 3, "Chinese")
-GUI.SelectedTheme =  Menu.AddOption({ "GUI"}, "Theme", "Select GUI theme", 1, 4 )
+GUI.SelectedTheme =  Menu.AddOption({ "GUI"}, "Theme", "Select GUI theme", 1, 3 )
 Menu.SetValueName(GUI.SelectedTheme, 1, "Default")
 Menu.SetValueName(GUI.SelectedTheme, 2, "Dark")
 Menu.SetValueName(GUI.SelectedTheme, 3, "Mono")
