@@ -1,6 +1,6 @@
 ![main](./Screenshots/background.png)
 
-## How To
+## Instruction
 
 1. Download GUI.lua
 2. Put it in hake/scripts/ folder
