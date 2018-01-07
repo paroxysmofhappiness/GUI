@@ -11,8 +11,6 @@
 
 ## Documentation
 
-Full documentation you can find here
-
 - [GLOBAL](https://github.com/paroxysmofhappiness/GUI/wiki/GLOBAL)
 - [CONTROLS](https://github.com/paroxysmofhappiness/GUI/wiki/CONTROLS)
 - [ADDITIONAL](https://github.com/paroxysmofhappiness/GUI/wiki/ADDITIONAL)
