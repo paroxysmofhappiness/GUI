@@ -18,7 +18,3 @@ Full documentation you can find here
 - [ADDITIONAL](https://github.com/paroxysmofhappiness/GUI/wiki/ADDITIONAL)
 - [SIMPLE EXAMPLE](https://github.com/paroxysmofhappiness/GUI/wiki/SIMPLE-EXAMPLE)
 - [NOTICES](https://github.com/paroxysmofhappiness/GUI/wiki/NOTICES)
-
-## Contributing to this project
-
-If you've improved GUI and think that other people would enjoy it, submit a pull request. Anyone and everyone is welcome to contribute.
