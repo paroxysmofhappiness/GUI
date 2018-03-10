@@ -1378,7 +1378,15 @@ function DrawImageBox(click, x, y, value)
 	for _, k in ipairs(sortedKeys) do
 		local tempName = k:gsub(value["replace"], "")
 		local imageHandle = GUIDB.Image(tempName)
-
+		if imageHandle == nil then
+			if value["iconpath"] ~= "" then
+				imageHandle = Renderer.LoadImage(value["iconpath"] .. tempName .. ".png")
+			else
+				imageHandle = Renderer.LoadImage(value["heroes"][k] .. tempName .. ".png")
+			end
+			GUIDB.Images[tempName] = imageHandle
+		end
+		
 		if value["search"] ~= nil and strpos(tempName, string.lower(value["search"])) ~= false then
 			Renderer.SetDrawColor(0, 255, 0, 255)
 			Renderer.DrawOutlineRect(tempx, y + 25, value["size_x"], value["size_y"])
@@ -1473,6 +1481,14 @@ function DrawOrderBox(inpos, leftclick, rightclick, x, y, value)
 	for _, k in ipairs(sortedKeys) do
 		local tempName = k:gsub(value["replace"], "")
 		local imageHandle = GUIDB.Image(tempName)
+		if imageHandle == nil then
+			if value["iconpath"] ~= "" then
+				imageHandle = Renderer.LoadImage(value["iconpath"] .. tempName .. ".png")
+			else
+				imageHandle = Renderer.LoadImage(value["heroes"][k] .. tempName .. ".png")
+			end
+			GUIDB.Images[tempName] = imageHandle
+		end
 		
 		if value["search"] ~= nil and strpos(tempName, string.lower(value["search"])) ~= false then
 			Renderer.SetDrawColor(0, 255, 0, 255)
