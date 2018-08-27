@@ -1664,7 +1664,7 @@ end
 function GUIDB.LoadImage(k, path, name)
 
 	if (GUIDB.Images[k] == nil) then
-		if strpos((name or path .. k), "grimstroke") ~= false then
+		if string.match((name or path .. k), "grimstroke") and string.match((name or path .. k), "mini") then
 			GUIDB.Images[k]	= Renderer.LoadImage('panorama/images/heroes/icons/npc_dota_hero_grimstroke_png.vtex_c')
 		else
 			GUIDB.Images[k]	= Renderer.LoadImage((name or path .. k) .. ".png")
